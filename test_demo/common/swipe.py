@@ -1,7 +1,8 @@
-# -------------封装一个滑动方法-------------------
+#封装一个滑动方法
+
 class Swipe:
-    # def __init__(self):
-        # pass
+    #def __init__(self):
+        #pass
     def swipeUp(driver,t=500,n=1):
         l=driver.get_window_size()
         x1 = l['width']*0.5 #起始x坐标
@@ -32,4 +33,4 @@ class Swipe:
             driver.swipe(x1,y1,x2,y1,t)
         if __name__ == "__main__":
             print(driver.get_window_size())
-            Swipe.swipeDown(driver)
+
