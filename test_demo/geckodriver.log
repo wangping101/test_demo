@@ -44,3 +44,19 @@
 1535114174245	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.IUsJmhO5gOmu
 1535114174251	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
 1535114174268	geckodriver::marionette	INFO	Connecting to Marionette on localhost:52078
+1545554694255	geckodriver	INFO	Listening on 127.0.0.1:57133
+1545554697816	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.gUqOTK91jgFH
+1545554697867	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1545554697983	geckodriver::marionette	INFO	Connecting to Marionette on localhost:57148
+1545554720073	Marionette	INFO	Listening on port 57148
+1545554738983	Marionette	INFO	startBrowser f9a73596-4990-4539-b66d-f8524dffe455
+1545554739072	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+1545554740878	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+1545554750093	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+1545554750105	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+1545554752730	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+1545554752743	Marionette	INFO	sendAsync f9a73596-4990-4539-b66d-f8524dffe455
+JavaScript error: https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=y&json=1&p=3&sid=26523_1436_21116_28131_27750_27244_27508&req=2&csor=1&cb=jQuery110202814647489904194_1545554747385&_=1545554747387, line 1: TypeError: jQuery110202814647489904194_1545554747385 is not a function
+JavaScript error: https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=yo&json=1&p=3&sid=26523_1436_21116_28131_27750_27244_27508&req=2&csor=2&pwd=y&cb=jQuery110202814647489904194_1545554747385&_=1545554747388, line 1: TypeError: jQuery110202814647489904194_1545554747385 is not a function
+JavaScript error: https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=yoyo&json=1&p=3&sid=26523_1436_21116_28131_27750_27244_27508&req=2&csor=4&pwd=yoy&cb=jQuery110202814647489904194_1545554747385&_=1545554747390, line 1: TypeError: jQuery110202814647489904194_1545554747385 is not a function
+JavaScript error: https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=yoy&json=1&p=3&sid=26523_1436_21116_28131_27750_27244_27508&req=2&csor=3&pwd=yo&cb=jQuery110202814647489904194_1545554747385&_=1545554747389, line 1: TypeError: jQuery110202814647489904194_1545554747385 is not a function
