@@ -18,7 +18,7 @@ def all_case():
 
 if __name__ == "__main__":
     # 报告存放路径
-    report_path = os.path.join(".\\report\\report.html")
+    report_path = os.path.join("\\report\\report.html")
     fp = open(report_path, "wb")
     runner = STHTMLTestRunner.HTMLTestRunner(stream=fp,
                                              title=U'自动化测试报告',
