@@ -362,9 +362,9 @@ function hide_img(obj){
 </div>
 <div class='heading'>
 <h1>自动化测试报告</h1>
-<p class='attribute'><strong>开始时间:</strong> 2018-08-25 17:51:10</p>
-<p class='attribute'><strong>耗时:</strong> 0:00:39.371094</p>
-<p class='attribute'><strong>状态:</strong> <span class="tj passCase">Pass</span>1</p>
+<p class='attribute'><strong>开始时间:</strong> 2018-12-23 15:31:52</p>
+<p class='attribute'><strong>耗时:</strong> 0:00:07.577149</p>
+<p class='attribute'><strong>状态:</strong> <span class="tj errorCase">Error</span>1</p>
 
 <p class='description'>用例执行情况：</p>
 </div>
@@ -397,35 +397,53 @@ function hide_img(obj){
     <th>错误截图</th>
 </tr>
 
-<tr class='passClass'>
-    <td>test_login.TestLogin</td>
-    <td>1</td>
+<tr class='errorClass'>
+    <td>unittest.loader._FailedTest</td>
     <td>1</td>
     <td>0</td>
     <td>0</td>
+    <td>1</td>
     <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
     <td>&nbsp;</td>
 </tr>
 
-<tr id='pt1.1' class='hiddenRow'>
-    <td ><div class='testcase'>test_login_1</div></td>
+<tr id='ft1.1' class='none'>
+    <td ><div class='testcase'>test_login</div></td>
     <td colspan='5' align='center'>
 
     <!--css div popup start-->
-    <span class='status passCase'>
-    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
-        通过</a></span>
+    <span class='status errorCase'>
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
+        错误</a></span>
 
-    <div id='div_pt1.1' class="popup_window">
+    <div id='div_ft1.1' class="popup_window">
         <div style='text-align: right; color:red;cursor:pointer'>
-        <a onfocus='this.blur();' onclick="document.getElementById('div_pt1.1').style.display = 'none' " >
+        <a onfocus='this.blur();' onclick="document.getElementById('div_ft1.1').style.display = 'none' " >
            [x]</a>
         </div>
         <pre>
         
-pt1.1: &lt;selenium.webdriver.phantomjs.webdriver.WebDriver (session="6f668250-a84c-11e8-b333-3f102b67651a")&gt;
-百度一下，你就知道
-测试数据{'username': '18581893850', 'psw': 'wp635889832'}
+ft1.1: ImportError: Failed to import test module: test_login
+Traceback (most recent call last):
+  File "E:\test_demo\selenium_xuexi\test_login.py", line 12, in &lt;module&gt;
+    test_data = ExcelUtil(filePath, sheetName).dict_data()
+  File "E:\test_demo\common\Excel.py", line 7, in __init__
+    self.data = xlrd.open_workbook(filePath)
+  File "D:\Programs\Python\Python36\lib\site-packages\xlrd\__init__.py", line 116, in open_workbook
+    with open(filename, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: '..\\Excel\\test.xlsx'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Programs\Python\Python36\lib\unittest\loader.py", line 428, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "D:\Programs\Python\Python36\lib\unittest\loader.py", line 369, in _get_module_from_name
+    __import__(name)
+  File "E:\test_demo\selenium_xuexi\test_login.py", line 22, in &lt;module&gt;
+    for i in s:
+TypeError: 'NoneType' object is not iterable
+
 
 
         </pre>
@@ -439,16 +457,16 @@ pt1.1: &lt;selenium.webdriver.phantomjs.webdriver.WebDriver (session="6f668250-a
 <tr id='total_row'>
     <th>统计</th>
     <th>1</th>
+    <th>0</th>
+    <th>0</th>
     <th>1</th>
-    <th>0</th>
-    <th>0</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
 </tr>
 </table>
 <script>
     showCase(1);
-    drawCircle(1, 0, 0);
+    drawCircle(0, 0, 1);
 </script>
 
 <div id='ending'>&nbsp;</div>

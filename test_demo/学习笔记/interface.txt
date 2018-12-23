@@ -1,0 +1,141 @@
+Interface
+1、requests模块
+	pip install requests
+get请求
+import requests
+r = requests.get('xxx') #接口请求
+get参数params，par={"name":"wapn"}字典形式传参 
+r = requests.get('xxx'，params=par) #接口请求
+print r.status_code     #查看返回状态码
+print r.encoding  # 编码
+print r.content   # 获取返回内容
+print r.cookie    #获取cookie
+print r.raise_for_status() #失败请求抛出异常
+
+post请求
+post参数也是字典类型，以data 或json参入
+data类型：
+payload = {"name":"wapn"}
+r = requests.post('xxx',data=payload)
+
+json类型：如果是data需转换
+payload = {"name":"wapn"}
+data_json = json.dumps(payload) #转换为json
+r = requests.post('xxx',json=data_json,verify=False)
+
+2、https请求
+	1.verify=False #忽略ssl签证
+	2.py3报错
+		import urllib3
+		urllib3.disable_warnings() 
+3、Encode（python->json）
+	1、为什么要encode，python里面bool值是True和False,json里面bool值是true和false,并且区分大小写
+	2、经过json.dumps（）后变成str，True变成了true,False变成了fasle
+4、重定向Loation
+	1、301 redirect: 301 代表永久性转移(Permanently Moved)
+	2、302 redirect: 302 代表暂时性转移(Temporarily Moved )
+	3、禁止重定向（allow_redirects = False）
+	4、r.headers["Location"] #获取重定向地址
+5、token登录，直接将token放到请求头
+	
+6、unittest
+	1、加载unittest，继承unittest类---
+	2、前置后置及unittest执行顺序
+	3、unittest断言
+		1.assertEqual(self, first, second, msg=None)
+		--判断两个参数相等：first == second
+		2.assertNotEqual(self, first, second, msg=None)
+		--判断两个参数不相等：first ！= second
+		3.assertIn(self, member, container, msg=None)
+		--判断是字符串是否包含：member in container
+		4.assertNotIn(self, member, container, msg=None)
+		--判断是字符串是否不包含：member not in container
+		5.assertTrue(self, expr, msg=None)
+		--判断是否为真：expr is True
+		6.assertFalse(self, expr, msg=None)
+		--判断是否为假：expr is False
+		7.assertIsNone(self, obj, msg=None)
+		--判断是否为None：obj is None
+		8.assertIsNotNone(self, obj, msg=None)
+		--判断是否不为None：obj is not None
+	4、unittest批量执行
+		1、用discover加载测试用例
+		2、case_path = os.path.join(os.getcwd(), "case") 用例路径
+		3、定义一个all_case函数
+		4、discover =unittest.defaltTestLoader.discover(case_path, 
+														pattern="test*.py",
+														top_level_dir=None)
+		5、unittest.TestSuite().addTests(discover) #直接加载discover												
+		6、unittest.TextTestRunner().run(all_case())
+	5、unittest装饰器（@classmethod）参数cls， 解决浏览器多次打开问题
+		1、 @classmethod
+			def setUpClass(cls):
+			cls.driver.....
+	6、测试报告生成HTMLTestRunner
+		1、在批量执行的基础上，导入HTMLTestRunner
+		2、报告路径 report_abspath = os.path.join(report_path, "result.html")
+		3、fp = open(report_abspath, "wb") 保存
+		4、runner = HTMLTestRunner.HTMLTestRunner(stream=fp,
+                                           title=u'自动化测试报告,测试结果如下：',
+                                           description=u'用例执行情况：')
+		5、fp.close()
+	7、报告中文乱码问题，HTMLTestRunner.py文件中将uo = o.decode('xxx') xxx替换成utf-8
+	8、邮件发送（smtp）
+		1、先导入邮件模块 import smtplib
+		2、导入MIMEText库用来做纯文本的邮件模板 from email.mime.text import  MIMEText
+		3、邮件脚本
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+# -----------1、发件相关的参数---------------
+smtpserver = "smtp.163.com"            # 发件服务器
+port = 0                               # 端口
+sender = "m18581893850@163.com"        # 发件人
+psw = "wp639889832"                    # 密码
+receiver = "639889832@qq.com"          # 收件人
+# receiver = ["639889836@qq.com", "635889845@qq.com"] # 群发用列表
+
+# -----------2、编辑邮件内容---------------
+# -----------2、1只发送邮件---------------
+subject1 = "主题163"
+body = '<p>发送163邮件</p>'             # 邮件正文用html格式
+msg = MIMEText(body, "html", "utf-8")
+msg['from'] = sender
+msg['to'] = receiver
+msg['subject'] = subject1
+# -----------2、2发送附件-------------------
+# 读文件
+subject2 = "发送附件"
+file_path = "E:\\app_demo\\report\\report.html"
+with open(file_path, "rb") as fp:
+    mail_body = fp.read()
+msg = MIMEMultipart()
+msg["from"] = sender                     # 发件人
+msg["to"] = receiver                     # 收件人
+# msg["to"] = ";".join(receiver)         # 群发收件人
+msg["subject"] = subject2                # 主题
+# 正文
+body = MIMEText(mail_body, "html", "utf-8")
+msg.attach(body)
+# 附件
+att = MIMEText(mail_body, "base64", "utf-8")
+att["Content-Type"] = "application/octet-stream"
+att["Content-Disposition"] = 'attachment; filename="test_report.html"'
+msg.attach(att)
+
+# ----------3、发送邮件---------------------
+try:
+    smtp = smtplib.SMTP()
+    smtp.connect(smtpserver)                      # 连服务器
+    smtp.login(sender, psw)
+except:
+    smtp = smtplib.SMTP_SSL(smtpserver, port)
+    smtp.login(sender, psw)                       # 登录
+smtp.sendmail(sender, receiver, msg.as_string())  # 发送
+smtp.quit()                                       # 关闭
+
+34、unittest装饰器skip
+	1、@unittest.skip(reason) 无条件跳过，reason说明原因
+	2、@unittest.skipIf（condition，reason） condition为true的时候跳过
+	3、@unittest.skipUnless(cindition,reason) 为false时跳过
+	4、@unittest.expectedFailure 断言时跳过

@@ -1,0 +1,102 @@
+jenkins安装
+jdk for windows
+1、下载
+官网地址：http://www.oracle.com/technetwork/java/javase/downloads/index.html
+2、安装JDK
+3、配置环境变量
+1) 新建变量名：JAVA_HOME，变量值：C:\Program Files\Java\jdk1.8.0_11
+2) 打开PATH，添加变量值：%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin
+3) 新建变量名：CLASSPATH，变量值：.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar
+备注：
+1) .表示当前路径，%JAVA_HOME%就是引用前面指定的JAVA_HOME；
+2) JAVA_HOME指明JDK安装路径，此路径下包括lib，bin，jre等文件夹，tomcat，eclipse等的运行都需要依靠此变量。
+3) PATH使得系统可以在任何路径下识别java命令。
+4) CLASSPATH为java加载类(class or lib)路径，只有类在classpath中，java命令才能识别。
+
+4、测试jdk
+在CMD命令窗口下输入javac java javadoc命令，出现如下界面，则安装成功。
+
+tomcat配置
+首先请确保jdk运行环境已配置完毕，采用下面步骤进行tomcat配置。
+1、 官网下载
+下载地址：http://tomcat.apache.org/download-80.cgizip (pgp, md5)
+2、 解压到磁盘目录，建议目录c盘根目录下，更改目录名为tomcat：
+C:\tomcat
+3、 配置环境变量：
+1) 新建变量名：CATALINA_BASE，变量值：C:\tomcat
+2) 新建变量名：CATALINA_HOME，变量值：C:\tomcat
+3) 打开PATH，添加变量值：%CATALINA_HOME%\lib;%CATALINA_HOME%\bin
+4、 启动tomcat服务
+打开cmd命令窗口，输入startup.bat，出现tomcat启动成功提示框，则安装配置成功；
+5、 测试tomcat
+浏览器窗口输入：http://localhost:8080/
+
+安装jenkins
+1、下载Jenkins安装包 Jenkins.war包，放入Tomcat的D:\tomcat\webapps下
+2、启动Tomcat服务会自动安装
+3、浏览器窗口输入：http://localhost:8080/jenkins/
+
+在jenkins下执行javaws -wait slave-agent.jnlp
+
+git使用
+1、打开git，cd c:/wamp/www/aaa
+2、输入git init在目录里面建仓
+3、git status，查看状态，新改动文件都会成红色状态
+4、git add * 添加所有新文件到暂存区
+5、git add 文件名字  添加某个文件到暂存区，添加后再查看状态变为绿色fit
+6、git log 查看日志
+7、git commit -m "备注" 将暂存区文件提交仓库
+8、git reset --hard  HEAD^^ 回退版本，可以直接跟版本号
+9、git remote add origin xxx  提交远程GitHub
+10、git push -u origin master  推送到了github上
+11、 git branch  #显示所有本地分支
+12、$ ls -a    #找到目录下.git
+13、$ rm -rf  .git   #删除
+14、git config --global user.name "这里是你的github用户名"   
+15、git config --global user.email xxx@xxx.com(你的邮箱)
+16、git remote rm origin 删除远程仓库
+17、git remote -v 查看远程分支
+18、git add . 将所有的添加到暂存区
+
+$ git init  初始化文件夹为一个git项目目录
+$ git clone https://git.xxx.com/xxx/xxx.git  签出代码
+$ Git global setup 全局参数设置（初始化新项目时）*／
+$ git config --global user.name "show name"
+$ git config --global user.email "email"
+
+$ git remote -v 查看远程分支
+$ git remote set-url origin https://xxxx.git   设置/修改git远程地址
+$ git remote rm origin 删除远程地址
+$ git remote add origin https://xxxx.git   添加远程地址
+gi
+$ git branch [-r][-v]查看本地分支
+$ git checkout [-b] dev 切换[新]分支
+$ git checkout sss.html 还原本地修改，到最新版本
+$ git status 查看文件变化列表
+$ git diff 查看当前版本所有修改
+$ git diff xxx.html 查看具体某文件修改
+$ git add [.][xxx.ss yyy.ss] 添加到提交版本
+$ git reset xxx.ss 还原 git add 的文件到不加入提交列表中
+$ git reset --hard [62ecb3] 把所有文件修改还原成[指定，默认最新]版本
+$ git commit -m '备注' 提交本地
+$ git pull [origin dev]  拉取远程代码到本地
+$ git fetch  将本地库所关联的远程库的commit id更新至最新
+$ git push [-u] [origin dev]  推送本地[新分支]commits到远程
+$ git log 查看日志列表commit列表（包括commit未Push的）
+$ git log xxx.ss   查看某文件的提交版本
+$ git log -p 查看日志版本文件修改内容
+$ git show 62ecb3 [sss.xx]查看某版本[文件]改变内容
+
+$ git stash 暂存文件
+$ git stash pop 还原暂存文件
+
+$ git merge dev 合并dev分支提交版本至当前分支
+
+$ git cherry-pick 62ecb3   单独合并某分支某次特定提交到要合并的版本到master
+
+／* 合并某个分支上的一系列commits到master *／
+$ git checkout -b newbranch 62ecb3  从有新提交的分支上基于某特定commit基础上创建一个新分支
+$ git rebase --onto master 76cada^  选择特定要合并的commit到主分支
+
+打包上线
+git archive -o ../publish_packet/ec/pub_2017-12-25.zip HEAD $(git diff --name-only 4f88edfcc0872a1aed6186fd53df7751bd69bfe6^)

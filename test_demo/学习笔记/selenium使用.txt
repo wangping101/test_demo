@@ -1,0 +1,570 @@
+selenium使用:
+1、导入selenium模块
+2、启动浏览器driver=webdriver.chrome()
+			 driver.get('www.baidu.com')
+3、页面刷新driver.refresh()
+4、页面后退前进，driver.back()，driver.forward()
+5、设置窗口大小，driver，set_window_size(540,960)
+6、将浏览器窗口最大化，driver.maximize_window()
+7、截屏保存，driver.get_screenshot_as_file("D:\\test\\1.png")
+8、关闭，driver.close()或driver.quit(),close是关闭当前窗口，quit是结束关闭所有窗口，回收临时文件
+
+9、火狐浏览器使用（使用火狐的插件Firebug和firepath）
+		1、安装插件Firebug和firepath，直接在附加组件中搜索安装即可
+		2、元素定位，点击浏览器上方小爬虫即可使用
+		3、通过firepath选择css和xpath
+		4、火狐浏览器辅助定位终极大插件：SeleniumBuilder 直接在附加组件中搜索安装即可
+			使用：工具->web开发者->Launch Selenium->Builder->输入要测url点击record
+			
+10、selenium定位，webdriver提供18种元素定位
+	1、常用的8中元素定位（元素定位需html基础）
+		1.find_element_by_id()
+  		2.find_element_by_name()
+		3.find_element_by_class_name()
+		4.find_element_by_tag_name()
+		5.find_element_by_link_text(hao123) 超链接可使用
+		6.find_element_by_partial_link_text(o123) 超链接很长，模糊匹配方式
+		7.find_element_by_xpath() 没有id，name，class，也不是超链接，可用xpath
+		用工具Firebug和firepath快速查看，也可以自写
+		8.find_element_by_css_selector() css是另一种语法，比xpath简洁，也可用firepath查看
+	2、8种复数形式定位
+		1.find_elements_by_id(self, id_)
+		2.find_elements_by_name(self, name)
+		3.find_elements_by_class_name(self, name)
+		4.find_elements_by_tag_name(self, name)
+		5.find_elements_by_link_text(self, text)
+		6.find_elements_by_partial_link_text(self, link_text)
+		7.find_elements_by_xpath(self, xpath)
+		8.find_elements_by_css_selector(self, css_selector）
+	3、2种参数化方法
+		1.find_element(self, by='id', value=None)
+		2.find_elements(self, by='id', value=None)
+11、xpath语法详解
+	1、工具查看比较死板，不够灵活，可自己手动的去写
+	2、XPath即为XML路径语言，通过元素的路径来查找
+	3、xapth属性定位
+		1.xptah也可以通过元素的id、name、class这些属性定位，如 //*[@id='kw']
+		2.如果id、name、class属性都没有，可以通过其它属性定位 如 //*[@autocomplete='off']
+	4、xpath标签
+		1.同1属性，同名多，可通过标签筛选（直接写标签名称），定位更准 如 //input[@id='kw']
+		2.不想制定标签名称，用*号表示任意标签
+	5、xpath层级
+		1.如果本身找不到，可找祖宗找后代，来定位
+		2.一层一层找，通过层级关系定位
+	6、xpath索引
+		1.1个元素它的兄弟元素跟它的标签一样，这时候无法通过层级定位到。因为都是一个父亲生的，多胞胎兄弟
+		2.多胞胎很难识别，但出生有先后，可通过它在家里的排行老几定位，可用索引 如//*[@id='nr']/option[1]
+	7、xpath逻辑运算 （and,or,not）,and是使用主流 如 //*[@id='kw' and @autocomplete='off']
+	8、xpath模糊匹配 基本没有定位不到的，模糊匹配某个属性，匹配以什么开头，以什么结尾，如 //*[starts-with(@id,'kw')]
+	9、xpath支持强大的正则表达式  如  //*[matchs(text(),'hao13')]
+xpath是元素定位界的屠龙刀。武林至尊，宝刀xpath，css不出，谁与争锋？
+12、css语法详解（对比xpath）	
+	1、css中一般属性样式如name：[name='wd'] 
+	2、css用可用#表示id的属性 如 ：#kw ，可用.表示class属性 如： .s_ipt，标签无任何标识符
+	3、css定位，标签可与id和class属性组合使用 如：input#kw input.s_ipt
+	4、标签与其他属性组合定位 如： input[id='kw'],同xpath中标签筛选相似
+	5、css层级关系
+		1、用xpath：//form[@id='form']/span/input和//form[@class='fm']/span/input
+		2、用css：form#kw>span>input 和 form.fm>sapan>input
+	6、css的索引方式 select#nr>option:nth_child(1)
+	7、css的逻辑运算无需写and，如：input[id='kw'][autocomplete='off'] 
+	
+13、操作元素
+	1.点击（鼠标左击）页面按钮：click()
+    2.清空输入框：clear()
+    3.输入字符串：send_keys()
+	4.submit()一般用于模拟回车键，提交表单
+	5、模拟键盘操作，先导入键盘模块：from selenium.webdriver.common.keys import Keys 
+	   模拟enter键，可以用send_keys(Keys.ENTER)
+	   复制Ctrl+C：send_keys(Keys.CONTROL,'c') 
+       粘贴Ctrl+V：send_keys(Keys.CONTROL,'v') 
+       全选Ctrl+A：send_keys(Keys.CONTROL,'a') 
+       剪切Ctrl+X：send_keys(Keys.CONTROL,'x') 
+       制表键Tab:  send_keys(Keys.TAB) 
+	6、模拟鼠标，先导入模块：from selenium.webdriver.common.action_chains import ActionChains
+		用法：mouse = driver.find_element_by_link_text("设置")
+		      ActionChains(driver).move_to_element(mouse).perform()
+		perform() 执行所有ActionChains中的行为
+		move_to_element() 鼠标悬停
+		右击鼠标：context_click()
+		双击鼠标：double_click()
+14、多窗口、句柄（handle）
+	1、获取当前窗口句柄：  h=driver.current_window_handle 并打印
+	2、获取当前所有的句柄：all_h=driver.current_window_handles
+	3、切换句柄
+		方法1、 for i in all_h:
+					if i !=h:
+						driver.switch_to.window(i)
+						print driver.title
+		方法2、	driver.switch_to.window(all_h[1])
+					print driver.title
+	4、close是关闭当前窗口，因为此时有两个窗口，用close可以关闭其中一个，quit是退出整个进程
+15、frame与iframe区别与切换
+	1、iframe是整个区域，不能点击其中属性
+	2、需切换到frame才能操作
+	3、切换方法switch_to_frame ，frame默认支持id和name，如：driver.switch_to.frame('id、name属性')
+	4、如果iframe没有id和name，可先切换到tag上也能达到效果
+	5、释放iframe，driver.switch_to.default_content()
+	6、判断元素是否在iframe上，切换到firepath界面，显示Top window没有在，显示iframe#id则在
+16、select下拉框，二次定位
+	1、select下拉框中元素，一次定位不到，需进行二次定位
+	2、如：driver.find_element_by_id("nr").find_element_by_xpath("//option[@value='50']").click()
+	3、可分开写 s=driver.find_element_by_id("nr") 先定位到下拉框
+				s.find_element_by_xpath("//option[@value='50']").click()
+	4、直接定位，用xpath或css一步到位 如xpath：driver.find_element_by_xpath(".//select[@id='nr']/option[2]")
+				driver.find_element_by_css_selector(".//select#nr>option:nth_child(2)")
+17、select模块（index）（value）（text）
+	1、selenium还提供了更高级的玩法，导入Select模块。直接根据属性或索引定位
+	2、导入select方法：from selenium.webdriver.support.select import Select
+	3、通过select选项的索引来定位选择对应选项（从0开始计数）
+		s=driver.find_element_by_id("nr")
+		Select(s).select_by_index(2)
+	4、通过select选项的value值来定位
+		Select(s).select_by_value("20")
+	5、通过select选项的文本内容定位text
+		Select(s).select_by_visible_text("每页显示20条")
+	6、select模块的其他方法
+		elect_by_index()  :通过索引定位
+		select_by_value()  :通过value值定位
+		select_by_visible_text() :通过文本值定位
+		deselect_all()          ：取消所有选项
+		deselect_by_index()     ：取消对应index选项
+		deselect_by_value()      ：取消对应value选项
+		deselect_by_visible_text() ：取消对应文本选项
+		first_selected_option()  ：返回第一个选项
+		all_selected_options()   ：返回所有的选项
+18、弹框alert\confirm\prompt 
+	1、alert\confirm\prompt弹出框操作主要方法有：
+		.text：获取文本值
+		.accept() ：点击"确认"
+		.dismiss() ：点击"取消"或者叉掉对话框
+		.send_keys() ：输入文本值 --仅限于prompt
+	2、识别区分alert\confirm\prompt
+		alert只有确认按钮，但可dismiss，页面不能输入
+		confirm有确认取消按钮，页面不能输入
+		prompt 可输入，提交确认与取消
+		都用switch_to.alert()切换到弹框上
+			driver.find_element_by_id("confirm").click()
+			t=switch_to.alert()
+			t.text ...
+19、单选框和复选框（radiobox、checkbox）
+	1、单选框，复选框单选直接定位点击
+	2、复选框全选，type是一样的都是checkbox，可通过复数形式获取到所有的CheckBox对象
+	3、find_elements不能直接点击，可通过for循环去全部勾选
+	4、判断是否选中 .is_selected()返回bool类型，print()出来，勾选为true，未勾选false
+	
+20、table表格定位
+	1、table页面查看源码一般有这几个明显的标签：table、tr、th、td
+	2、通过xpath定位
+21、加载Firefox配置
+	1、需要用FirefoxProfile(profile_directory)这个类来加载
+	2、profile_directory既为浏览器配置文件的路径地址
+	3、profile_directory=None，如果没有路径，默认为None
+	4、路径：打开Firefox点右上角设置>？（帮助）>故障排除信息>显示文件夹
+	5、profile_directory= 路径
+	6、加载配置 profile = webdriver.Firefoxprofile（profile_directory）
+	7、启动浏览器 webdriver.Firefox（profile）
+22、加载Chrome配置
+	1、加载Chrome，将username改为电脑名称：--user-data-dir=C:\Users\Gloria\AppData\Local\Google\Chrome\User Data
+	2、option = webdriver.ChromeOptions()
+	3、option.add_argument('--user-data-dir=C:\Users\Gloria\AppData\Local\Google\Chrome\User Data')
+	4、driver = webdriver.Chrome(chrome_options=option)
+	5、wap测试伪装手机访问
+	
+		from selenium import webdriver
+		option = webdriver.ChromeOptions()
+		# 伪装iphone登录
+		# option.add_argument('--user-agent=iphone')
+		# 伪装android
+		option.add_argument('--user-agent=android')
+		driver = webdriver.Chrome(chrome_options=option)
+		driver.get('http://www.taobao.com/')
+		app = driver.page_source #获取源码
+		print(app)
+21、富文本（richtext）富文本编辑 --
+22、非input文件上传（SendKeys）
+	1、pip install SendKeys）---
+23、获取元素属性
+	1、获取页面title，直接driver.title，print(tile)
+	2、获取元素的文本 driver.find_element_by_id().text
+	3、获取元素的标签 .tag_name
+	4、获取元素的其他属性 .get_attribute()
+	5、获取浏览器名称  driver.name
+	
+24、爬页面源码（page_source）
+	1、driver.page_source直接返回源码
+	2、重新赋值后打印出来
+	3、导入正则模块 re.findall()，返回的是一个集合
+	4、可再建一个集合，把集合中筛选的添加到另一个集合
+25 cookie相关操作
+	1、获取cookie，driver.get_cookies()
+	2、登录前后cookie有变化
+	3、获取指定name的cookie driver.get_cookie(name='')
+	4、清除cookie， delete_cookie()
+	5、清除所有的cookie， delete_all_cookies()
+	6、添加cookie，driver.add_cookie(cookie_dict)
+26、绕过验证码（add_cookie）
+	1、fiddler抓包抓取cookie
+	2、添加cookie，将cookie的所有参数用字典列出来，如： c1 ={'':''}
+		driver.add_cookie(c1)
+		driver.refresh() 刷新页面即可
+27、js处理滚动条
+	1、当屏幕上下或左右有拉升，需用滚动条
+	2、selenium提供了一操作js的方法：execute_script()
+	3、滚动条回到顶部 js="var q=document.getElementById('id').scrollTop=0"
+	   driver.execute_script(js)
+	4、滚动条拉到底部  js="var q=document.documentElement.scrollTop=10000"
+       driver.execute_script(js)
+	5、可修改scrollTop的值，来定位右侧滚动条的位置，0是最上面，10000是最底部
+	6、左右控制scrollTo(x, y)，js = "window.scrollTo(100,400);"
+	7、谷歌可用：js = "var q=document.body.scrollTop=0"
+	8、元素聚焦target = driver.find_element_by_xxxx()
+	   driver.execute_script("arguments[0].scrollIntoView();", target)
+28、js处理日历控件 ---2.23
+29  js处理内嵌div滚动条---2.24
+30、js定位
+	1、id定位 document.getElementById(“xxx”)
+			  driver.execute_script(js)
+	2、name定位  document.getElementsByName(“Name”)
+	3、标签选取元素定位 
+	4、document.getElementsByTagName(“tag”)
+	5、document.getElementsByClassName(“class”)
+	6、document.querySelectorAll(“css selector")	
+31、jQuery定位
+	1、按f12进入控制台
+	2、点击 "全部"按钮
+	3、输入定位语法，如$("#input1")，点击运行即可
+	4、基础语法$(selector).action(),
+	5、selector:这里的定位语法和css的定位语法是一致的
+	6、.action()是定位后的操作行为如click
+32、jquery行为
+	1、发送文本语法：$(selector).val(输入文本的值)
+	2、清空文本语法：$(selector).val('')   # 空字符串，两个单引号
+	3、点击按钮：$(selector).click()
+	
+33、unittest
+	1、加载unittest，继承unittest类---
+	2、前置后置及unittest执行顺序
+	3、unittest断言
+		1.assertEqual(self, first, second, msg=None)
+		--判断两个参数相等：first == second
+		2.assertNotEqual(self, first, second, msg=None)
+		--判断两个参数不相等：first ！= second
+		3.assertIn(self, member, container, msg=None)
+		--判断是字符串是否包含：member in container
+		4.assertNotIn(self, member, container, msg=None)
+		--判断是字符串是否不包含：member not in container
+		5.assertTrue(self, expr, msg=None)
+		--判断是否为真：expr is True
+		6.assertFalse(self, expr, msg=None)
+		--判断是否为假：expr is False
+		7.assertIsNone(self, obj, msg=None)
+		--判断是否为None：obj is None
+		8.assertIsNotNone(self, obj, msg=None)
+		--判断是否不为None：obj is not None
+	4、unittest批量执行
+		1、用discover加载测试用例
+		2、case_path = os.path.join(os.getcwd(), "case") 用例路径
+		3、定义一个all_case函数
+		4、discover =unittest.defaltTestLoader.discover(case_path, 
+														pattern="test*.py",
+														top_level_dir=None)
+		5、unittest.TestSuite().addTests(discover) #直接加载discover												
+		6、unittest.TextTestRunner().run(all_case())
+	5、unittest装饰器（@classmethod）参数cls， 解决浏览器多次打开问题
+		1、 @classmethod
+			def setUpClass(cls):
+			cls.driver.....
+	6、测试报告生成HTMLTestRunner
+		1、在批量执行的基础上，导入HTMLTestRunner
+		2、报告路径 report_abspath = os.path.join(report_path, "result.html")
+		3、fp = open(report_abspath, "wb") 保存
+		4、runner = HTMLTestRunner.HTMLTestRunner(stream=fp,
+                                           title=u'自动化测试报告,测试结果如下：',
+                                           description=u'用例执行情况：')
+		5、fp.close()
+	7、报告中文乱码问题，HTMLTestRunner.py文件中将uo = o.decode('xxx') xxx替换成utf-8
+	8、邮件发送（smtp）
+		1、先导入邮件模块 import smtplib
+		2、导入MIMEText库用来做纯文本的邮件模板 from email.mime.text import  MIMEText
+		3、邮件脚本
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+# -----------1、发件相关的参数---------------
+smtpserver = "smtp.163.com"            # 发件服务器
+port = 0                               # 端口
+sender = "m18581893850@163.com"        # 发件人
+psw = "wp639889832"                    # 密码
+receiver = "639889832@qq.com"          # 收件人
+# receiver = ["639889836@qq.com", "635889845@qq.com"] # 群发用列表
+
+# -----------2、编辑邮件内容---------------
+# -----------2、1只发送邮件---------------
+subject1 = "主题163"
+body = '<p>发送163邮件</p>'             # 邮件正文用html格式
+msg = MIMEText(body, "html", "utf-8")
+msg['from'] = sender
+msg['to'] = receiver
+msg['subject'] = subject1
+# -----------2、2发送附件-------------------
+# 读文件
+subject2 = "发送附件"
+file_path = "E:\\app_demo\\report\\report.html"
+with open(file_path, "rb") as fp:
+    mail_body = fp.read()
+msg = MIMEMultipart()
+msg["from"] = sender                     # 发件人
+msg["to"] = receiver                     # 收件人
+# msg["to"] = ";".join(receiver)         # 群发收件人
+msg["subject"] = subject2                # 主题
+# 正文
+body = MIMEText(mail_body, "html", "utf-8")
+msg.attach(body)
+# 附件
+att = MIMEText(mail_body, "base64", "utf-8")
+att["Content-Type"] = "application/octet-stream"
+att["Content-Disposition"] = 'attachment; filename="test_report.html"'
+msg.attach(att)
+
+# ----------3、发送邮件---------------------
+try:
+    smtp = smtplib.SMTP()
+    smtp.connect(smtpserver)                      # 连服务器
+    smtp.login(sender, psw)
+except:
+    smtp = smtplib.SMTP_SSL(smtpserver, port)
+    smtp.login(sender, psw)                       # 登录
+smtp.sendmail(sender, receiver, msg.as_string())  # 发送
+smtp.quit()                                       # 关闭
+
+34、unittest装饰器skip
+	1、@unittest.skip(reason) 无条件跳过，reason说明原因
+	2、@unittest.skipIf（condition，reason） condition为true的时候跳过
+	3、@unittest.skipUnless(cindition,reason) 为false时跳过
+	4、@unittest.expectedFailure 断言时跳过
+	
+35、常见selenium异常
+	1.NoSuchElementException：没有找到元素
+	2.NoSuchFrameException：没有找到iframe
+	3.NoSuchWindowException:没找到窗口句柄handle
+	4.NoSuchAttributeException:属性错误
+	5.NoAlertPresentException：没找到alert弹出框
+	6.ElmentNotVisibleException：元素不可见
+	7.ElementNotSelectableException：元素没有被选中
+	8.TimeoutException：查找元素超时
+	
+36、捕获异常
+	1、程序中查找元素中断，无法继续click，需捕获异常返回
+	2、用try...except...捕获异常。捕获异常后可以打印出异常原因
+	3、使用selenium的exceptions模块
+		from selenium.common.exceptions import NoSuchElentException
+	4、使用方法
+		try：
+			element = driver.find_element_by_id("ku")
+		except NoSuchElementException as msg:
+			print u"查找元素异常%s"%msg
+		else:
+			element.click()
+37、异常截图，截图方法
+	1、get_screenshot_as_file(self,filename)
+		1.获取当前window的截图，IOError时返回False，截图成功返回Ture
+		2.filename参数是保存文件的路径 如：driver.get_screenshot_as_file('/Screenshots/foo.png')
+	2、get_screenshot_as_base64(self)
+		获取屏幕截图，以base64编码格式保存，在html报告中可用 如：driver.get_screenshot_as_base64()
+	3、get_screenshot_as_png(self) 以二进制数据保存
+	4、图片名称可以加时间戳
+		nowTime = time.strftime("%Y%m%d.%H.%M.%S")
+		t=driver.get_screenshot_as_file('%s.jpg' % nowTime)
+		print(u"截图结果:" %t)
+		
+38、场景判断与封装
+	1、显式等待 WebDriverWait
+		1.class WebDriverWait(object):driver, timeout, poll_frequency
+		2.driver:返回浏览器的一个实例
+		3.timeout：超时的总时长
+		4.poll_frequency：循环去查询的间隙时间，默认0.5秒
+	2、元素出现，until() 如：WebDriverWait(driver, 10).until(lambda x: x.find_element_by_id("kw")).send_keys("yoyo")
+	3、元素消失，until_not()
+	
+39、封装读取Excel（加载xlrd）
+	1、打开Excel,参数是文件路径 如:data = xlrd.open_wordbook('E:\app_demo\excel')
+	2、获取文件下的表
+		1.通过索引获取 table=data.sheets()[0] 或 table = data.sheet_by_index(0) 
+		2.通过名称获取 table = data.sheet_by_name(u'Sheet1') 
+		3.获取总行数   nrows = table.nrows
+		4.获取总列数   ncols = table.ncols  
+		5.获取第一行值 print table.row_values(0)  
+		6.获取第一列值 print table.col_values(0)  
+	3、Excel存放数据
+		1.excel中存放数据，第1行为标题
+		2.Excel数据纯数字是浮点数，设置单元格为文本格式
+	4、封装读取方法
+		1.读取的数据为字典的list类型数据，对应key和value值
+		2.封装代码
+# -------------封装读取Excel表数据-------------------
+import xlrd
+'''定义一个类'''
+class ExcelUtil():
+    def __init__(self, exclepath, sheetName):
+        #exclepath = "E:\\app_demo\excel"
+        #sheetName = "sheet1"
+        self.data = xlrd.open_workbook(exclepath)
+        self.table = self.data.sheet_by_name(sheetName)
+        # 获取第一列的key值
+        self.keys = self.table.row_values(0)
+        # 获取总行数
+        self.rowNum = self.table.nrows
+        # 获取总列数
+        self.colNum = self.table.ncols
+    # 读取Excel表中值
+    def dict_data(self):
+        if self.rowNum <= 1:
+            print("无有用数据可取")
+        else:
+            # 创建一个列表将数据放入
+            r = []
+            j = 1
+            for i in range(self.rowNum-1):
+                s = {}
+                # 从第二行取对应values值
+                values = self.table.row_values(j)
+                for x in range(self.colNum):
+                    s[self.keys[x]] = values[x]
+                r.append(s)
+                j += 1
+                return r
+if __name__ == "__main__":
+    filePath = "E:\\app_demo\excel\\test.xlsx"
+    sheetName = "Sheet1"
+    data = ExcelUtil(filePath, sheetName)
+    print(data.dict_data())
+# --------------
+
+40、数据驱动ddt
+	1、pip install ddt
+	2、数据驱动原理
+		1.测试数据为多个字典的list类型
+		2.测试类前加修饰@ddt.ddt
+		3.case前加修饰@ddt.data()
+		4.运行后用例会自动加载成多个个单独的用例
+import ddt
+import unittest
+# 测试数据
+test_data = [{'username': 'wapn1', 'psw': '123456'},
+             {'username': 'wapn2', 'psw': '123456'},
+             {'username': 'wapn3', 'psw': '123456'},
+             {'username': 'wapn4', 'psw': '123456'}]
+@ddt.ddt
+class Test(unittest.TestCase):
+   # @classmethod
+    def setUp(self):
+        print("start")
+   # @classmethod
+    def tearDown(self):
+        print("stop")
+    @ddt.data(*test_data)
+    def test_ddt(self, data):
+        print(data)
+if __name__=="__main__":
+    unittest.main()
+	
+41、判断元素16种方法expected_conditions，简称EC，场景判断
+	1、title_is： 判断当前页面的title是否完全等于（==）预期字符串，返回布尔值
+	2、title_contains : 判断当前页面的title是否包含预期字符串，返回布尔值
+	3、presence_of_element_located : 判断某个元素是否被加到了dom树里，并不代表该元素一定可见
+	4、visibility_of_element_located : 判断某个元素是否可见. 可见代表元素非隐藏，并且元素的宽和高都不等于0
+	5、visibility_of : 跟上面的方法做一样的事情，只是上面的方法要传入locator，直接传定位到的element
+	6、presence_of_all_elements_located : 判断是否至少有1个元素存在于dom树中
+	7、text_to_be_present_in_element : 判断某个元素中的text是否 包含 了预期的字符串
+	8、text_to_be_present_in_element_value : 判断某个元素中的value属性是否 包含 了预期的字符串
+	9、frame_to_be_available_and_switch_to_it : 判断该frame是否可以switch进去，如果可以的话，返回True并且switch进去，否则返回False
+	10、invisibility_of_element_located : 判断某个元素中是否不存在于dom树或不可见
+	11、element_to_be_clickable : 判断某个元素中是否可见并且是enable的，这样的话才叫clickable
+	12、staleness_of : 等某个元素从dom树中移除，注意，这个方法也是返回True或False
+	13、element_to_be_selected : 判断某个元素是否被选中了,一般用在下拉列表
+	14、element_selection_state_to_be : 判断某个元素的选中状态是否符合预期
+	15、element_located_selection_state_to_be : 跟上面的方法作用一样，只是上面的方法传入定位到的element，而这个方法传入locator
+	16、alert_is_present : 判断页面上是否存在alert
+42、EC模块加载
+	1、from selenium.common.exceptions import NoSuchElementException
+	2、from selenium.common.exceptions import NoSuchFrameException
+	3、from selenium.common.exceptions import StaleElementReferenceException
+	4、from selenium.common.exceptions import WebDriverException
+	5、from selenium.common.exceptions import NoAlertPresentException
+	
+43、判断title方法title_is
+	1、获取页面title的方法可以直接用driver.title获取，获取结果断言
+	2、用expected_conditions模块里的title_is和title_contains两种方法判断
+		title_is 导入模块给别名如:EC,from selenium.webdriver.support import expected_conditions as EC
+		打开页面后判断title，返回结果是True或False，title =EC.title_is("xxx")并打印
+	3、判断title包含:title_contains，用法一样
+44、判断文本text_to_be_present_in_element
+	1、判断元素中是否存在指定的文本，两个参数：locator, text
+	2、__call__里返回的是布尔值：Ture和False
+	3、用法：locator = ("name", "tj_trnuomi")
+			 text = u"糯米"
+			 result = EC.text_to_be_present_in_element(locator, text)(driver)
+			 print result
+
+45、判断value的方法text_to_be_present_in_element_value(object)
+46、判断弹出框，alert_is_present
+
+from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+driver = webdriver.Firefox()
+url = "https://www.baidu.com"
+driver.get(url)
+mouse = WebDriverWait(driver, 10).until(lambda x: x.find_element("link text", "设置"))
+ActionChains(driver).move_to_element(mouse).perform()
+WebDriverWait(driver, 10).until(lambda x: x.find_element("link text", "搜索设置")).click()
+#　选择设置项
+s = WebDriverWait(driver, 10).until(lambda x: x.find_element("id", "nr"))
+Select(s).select_by_visible_text("每页显示50条")
+# 点保存按钮
+js = 'document.getElementsByClassName("prefpanelgo")[0].click();'
+driver.execute_script(js)
+result = EC.alert_is_present()(driver)
+if result:
+    print result.text
+    result.accept()
+else:
+    print "alert 未弹出！"
+
+47、二次封装（click/sendkeys）
+	1、定位元素代码driver.find_element_by_id("kw").send_keys(u"小学文化")，说明停留在小学水平
+	2、避免一会正常运行，一会又报错的情况，定位需与WebDriverWait结合
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

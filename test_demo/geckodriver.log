@@ -1,0 +1,46 @@
+1535113479927	geckodriver	INFO	Listening on 127.0.0.1:51273
+1535113482951	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.d7QFUehOnj5s
+1535113482958	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535113482975	geckodriver::marionette	INFO	Connecting to Marionette on localhost:51288
+1535113484667	Marionette	INFO	Listening on port 51288
+1535113489397	Marionette	INFO	startBrowser 08328360-966a-44b7-9e05-f949cf1b5fde
+1535113489408	Marionette	INFO	sendAsync 08328360-966a-44b7-9e05-f949cf1b5fde
+1535113490046	Marionette	INFO	sendAsync 08328360-966a-44b7-9e05-f949cf1b5fde
+1535113508789	geckodriver	INFO	Listening on 127.0.0.1:51331
+1535113511800	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.YuWI6Yi5xomI
+1535113511807	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535113511824	geckodriver::marionette	INFO	Connecting to Marionette on localhost:51339
+1535113513923	Marionette	INFO	Listening on port 51339
+1535113518811	Marionette	INFO	startBrowser e19b7f84-5bf4-45c8-889a-fd98dc2782d5
+1535113518822	Marionette	INFO	sendAsync e19b7f84-5bf4-45c8-889a-fd98dc2782d5
+1535113519503	Marionette	INFO	sendAsync e19b7f84-5bf4-45c8-889a-fd98dc2782d5
+1535113540601	Marionette	INFO	sendAsync e19b7f84-5bf4-45c8-889a-fd98dc2782d5
+1535113540728	geckodriver	INFO	Listening on 127.0.0.1:51382
+1535113543741	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.JIkkGhY5pt7S
+1535113543749	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535113543764	geckodriver::marionette	INFO	Connecting to Marionette on localhost:51393
+1535113545918	Marionette	INFO	Listening on port 51393
+1535113550738	Marionette	INFO	startBrowser aea713dc-2b97-47b9-adf4-87bbc7209e6e
+1535113550748	Marionette	INFO	sendAsync aea713dc-2b97-47b9-adf4-87bbc7209e6e
+1535113552078	Marionette	INFO	sendAsync aea713dc-2b97-47b9-adf4-87bbc7209e6e
+1535113573172	Marionette	INFO	sendAsync aea713dc-2b97-47b9-adf4-87bbc7209e6e
+1535113573292	geckodriver	INFO	Listening on 127.0.0.1:51427
+1535113576670	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.koNvDY6Ylvv6
+1535113576678	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535113576696	geckodriver::marionette	INFO	Connecting to Marionette on localhost:51438
+1535113578487	Marionette	INFO	Listening on port 51438
+1535113582976	Marionette	INFO	startBrowser c3efa3cf-0e53-496f-9e9a-862edbc45f0b
+1535113582988	Marionette	INFO	sendAsync c3efa3cf-0e53-496f-9e9a-862edbc45f0b
+1535113583582	Marionette	INFO	sendAsync c3efa3cf-0e53-496f-9e9a-862edbc45f0b
+1535114138993	geckodriver	INFO	Listening on 127.0.0.1:52013
+1535114142015	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.3uDf953hwm2T
+1535114142031	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535114142046	geckodriver::marionette	INFO	Connecting to Marionette on localhost:52024
+1535114144509	Marionette	INFO	Listening on port 52024
+1535114149161	Marionette	INFO	startBrowser 01eb2237-615c-4e4c-8562-989fb351a1f7
+1535114149172	Marionette	INFO	sendAsync 01eb2237-615c-4e4c-8562-989fb351a1f7
+1535114150070	Marionette	INFO	sendAsync 01eb2237-615c-4e4c-8562-989fb351a1f7
+1535114171231	geckodriver	INFO	Listening on 127.0.0.1:52070
+1535114174245	mozprofile::profile	INFO	Using profile path C:\Users\ADMINI~1\AppData\Local\Temp\rust_mozprofile.IUsJmhO5gOmu
+1535114174251	geckodriver::marionette	INFO	Starting browser d:\Program Files\Mozilla Firefox48\firefox.exe
+1535114174268	geckodriver::marionette	INFO	Connecting to Marionette on localhost:52078

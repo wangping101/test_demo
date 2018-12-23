@@ -1,0 +1,50 @@
+HTML简单使用
+	<html> 与 </html> 之间的文本描述网页
+	<body> 与 </body> 之间的文本是可见的页面内容
+	<h1> 与 </h1> 之间的文本被显示为标题
+	<p> 与 </p> 之间的文本被显示为段落
+2、专业的 HTML 编辑器来编辑 HTML：
+	Adobe Dreamweaver
+	Microsoft Expression Web
+	CoffeeCup HTML Editor
+3、HTML 标题
+	HTML 标题（Heading）是通过 <h1> - <h6> 等标签进行定义的
+4、HTML 链接
+	HTML 链接是通过 <a> 标签进行定义的
+	<a href="http://www.w3school.com.cn">This is a link</a>
+5、HTML 图像
+	HTML 图像是通过 <img> 标签进行定义的
+	<img src="w3school.jpg" width="104" height="142" />
+6、空的 HTML 元素
+	<br> 就是没有关闭标签的空元素（<br> 标签定义换行）
+	开始标签中添加斜杠，比如 <br />，是关闭空元素的正确方法，HTML、XHTML 和 XML 都接受这种方式
+7、HTML 属性实例
+	<h1 align="center">居中显示</h1> 拥有关于对齐方式的附加信息
+	<body bgcolor="yellow"> 拥有关于背景颜色的附加信息
+	<table border="1"> 拥有关于表格边框的附加信息
+8、HTML 水平线
+	<hr /> 标签在 HTML 页面中创建水平线
+9、HTML 注释
+	<!-- This is a comment -->
+10、HTML 折行
+	希望在不产生一个新段落的情况下进行换行（新行），请使用 <br /> 标签
+	<p>This is<br />a para<br />graph with line breaks</p>
+11、HTML样式
+	style 属性用于改变 HTML 元素的样式
+	<p style="font-family:times;color:green">样式</p>
+12、HTML 样式实例 - 字体、颜色和尺寸，默认黑色
+	<h1 style="font-family:verdana;color:red">A heading</h1>
+	<p style="font-family:arial;color:red;font-size:60px;">A paragraph.</p>
+13、HTML 链接 - target 属性，target="_blank"超链接会在新页面打开
+	<a href="http://www.w3school.com.cn/" target="_blank">Visit W3School!</a>
+14、HTML页添加背景图片
+	<body background="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3620639172,2952567970&fm=26&gp=0.jpg">
+	<body bgcolor="#000000">
+	<body bgcolor="rgb(0,0,0)">
+	<body bgcolor="black">
+15、css简单使用
+	<style type="text/css">
+    body {background-color: yellow} #背景颜色
+    u1{position:absolute; left:120px;top:120px; bottom:0px；right:0px} #调整位置
+    h1 {color: #8B008B;font-size:20px} 设置颜色，字体大小
+    </style>

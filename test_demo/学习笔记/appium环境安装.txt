@@ -1,0 +1,44 @@
+appium环境安装
+1、安装jdk，配置环境变量
+	JAVA_HOME
+	CLASSPATH---.;%JAVA_HOME%\lib;%JAVA_HOME%\lib\tools.jar;
+	PATH-----;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+验证安装成功 Java -version
+			 Javac
+ 2、安装andriod sdk,配置环境变量
+	ANDROID_HOME D:\androidsdk\android-sdk-windows（sdk安装路径）
+	path添加D:\androidsdk\android-sdk-windows\tools和D:\androidsdk\android-sdk-windows\platform-tools
+adb -version查看版本号
+adb devices,出现一串字符，显示devices说明连接成功
+adb install [apk在电脑上的绝对路径]安装app 
+adb uninstall xxx 删除app
+adb kill -server 杀进程
+adb start-server 重启服务
+adb reboot 重启手机
+adb shell 进shell模式
+adb remount 挂载
+adb push <本地路径> <远程路径> 电脑发文件到手机
+adb pull <远程路径> <本地路径> 从手机下载文件到本地
+adb logcat >/sdcard/log.txt 保存日志到手机
+adb logcat >D:/temp/log.txt 保存日志到电脑 （log.txt 电脑必须存在）	
+
+3、安装python，配置环境变量
+	D:\python和D:\python\Scripts，添加到环境变量path下
+python查看版本号
+
+4、安装node.js
+node -v 查看版本号
+npm install npm -g 升级npm版本
+npm安装命令 npm install –g xxx
+npm uninstall xxx
+
+5、安装.net framework
+
+6、安装appium，配置环境变量
+npm安装 npm install –g appium
+下载包手动安装
+	配置path，D:\appium\Appium\node_modules\.bin
+appium-doctor检查环境
+appium -v 查看版本
+
+7、安装Appium-Python-Client，pip install Appium-python-client

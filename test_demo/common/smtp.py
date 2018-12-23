@@ -11,16 +11,18 @@ receiver = "635889832@qq.com"          # 收件人
 
 # -----------2、编辑邮件内容---------------
 # -----------2、1只发送邮件---------------
-subject1 = "测试报告"
-body = '<p>发送测试报告</p>'             # 邮件正文用html格式
+
+
+subject1 = "给XXX的一封信"
+body = '<p>我们约会吧</p>'             # 邮件正文用html格式
 msg = MIMEText(body, "html", "utf-8")
 msg['from'] = sender
 msg['to'] = receiver
 msg['subject'] = subject1
 # -----------2、2发送附件-------------------
 # 读文件
-subject2 = "发送测试报告html"
-file_path = "F:\\app_demo\\report\\report.html"
+subject2 = "给帅哥的一张图片"
+file_path = "E:\\test_demo\\report\\report.html"
 with open(file_path, "rb") as fp:
     mail_body = fp.read()
 msg = MIMEMultipart()

@@ -1,0 +1,265 @@
+1 、app三种安装方式
+	1、cmd下使用adb install xxx（安装包位置及包）
+	2、python下执行命令安装
+		import os
+		os.system("adb install baidu.apk")
+	3、工程下建文件
+		import os
+		p = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),".."))
+		print(p)
+		appPath = lambda x:os.path.join(p, "app", x)
+		print(appPath("baidu.apk"))
+2、运行代码安装指定文件夹下app
+	# coding:utf-8
+	from appium import webdriver
+	import os
+	# 获取项目的根目录路径
+	p = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),".."))
+	# 获取app路径
+	appPath = lambda x:os.path.join(p, "app", x)
+	print(appPath("baidu.apk"))
+	desired_caps = {
+                'platformName': 'Android',  #安卓或IOS
+                'deviceName': '',  #手机adb链接时字符串
+                'platformVersion': '4.4.2', #手机系统版本
+                'app': appPath("baidu.apk"), #app路径
+                'appPackage': 'com.baidu.yuedu', #包名
+                'appActivity': 'com.baidu.yuedu.splash.SplashActivity',  #包名参数
+                'noReset': 'true', #已安装app不用安装
+                }
+	driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+3、如何查看apk包名和appActivity
+	1、安卓sdk自带工具aapt，
+	2、目录下找到aapt.exe，将这个路径设置环境变量，添加到path下
+	3、cmd输入aapt dump bading xxx（安装包位置及包）查看
+4、adb链接手机，真机启动app，代码
+	# coding=utf-8
+	from appium import webdriver
+	desired_caps = {
+                'platformName': 'Android',
+                'deviceName': '30d4e60695',
+                'platformVersion': '4.4.2',
+                # apk包名
+                'appPackage': 'com.taobao.taobao',
+                # apk的launcherActivity
+                'appActivity': 'com.taobao.tao.welcome.Welcome'
+                }
+	driver = webdriver.Remote('http://127.0.0.1:4723/wd/hub', desired_caps)
+5、元素定位，使用uiautomatorviewer
+	1、定位元素android sdk里面用一个自带的uiautomatorviewer
+	2、启动android-sdk-windows\tools下的uiautomatorviewer.bat
+	3、adb devices确认手机链接上
+	4、在真机启动代码的基础上定位
+		driver.find_element_by_id("com.taobao.taobao:id/home_searchedit").click()
+6、元素定位两种方法，appium用Inspector定位（不好用不推荐）
+	1、设置appium
+    	1.先不要启动appium
+    	2.点开android setting界面（机器人图标）
+    	3.勾选Application Path,添加被测app的路径，添加后能查看Launch Activity
+    	4.Devices name处添加设备名称（adb devices查看到的）
+	2、开启appium
+		1.手机确保连接电脑（adb devices查看）
+    	2.点appium右上角三角形图标，会启动服务
+    	3.这时候可以看到手机上安装淘宝应用，并会启动淘宝
+    	4.点appium右上角的搜索图标
+    	5.点Inspector Window界面的 Refresh 按钮刷新界面
+7、Remote远程控制，默认ip:http://127.0.0.1:4723,非远程不用改变
+	1、远程机appium中设置本机ip，端口保持不变
+	2、启动appium服务后，在浏览器输入：ip/wd/hub查看服务启动
+	3、代码中修改ip
+	
+8、app中文输入问题
+	1、屏蔽软件盘，在desired_caps{}设置里面加两个参数
+		1、unicodeKeyboard是使用unicode编码方式发送字符串
+    	2、resetKeyboard是将键盘隐藏起来
+		3、都设置为true
+	2、如果乱码，前面加上“#--coding:gb18030--”
+	3、恢复软键盘，手机输入设置里面还原
+9、appium的api 附带文档
+10、元素定位详解
+	1、定位app上的元素，可通过id，name，class定位，为空时不能用
+	2、class属性不唯一会报错
+	3、名称和代码名称可能不一致，id对应获取的resource-id，accessibility_id对应content-desc
+	4、复杂的可通过xpath和AndroidUiAutomator定位
+	5、xpath定位，xpath语法 seleium的 //*[text()='页面text文本'] appium的 //*[@text='页面text文本']
+		1、xpath语法适合页面上这个text属性是唯一的
+		2、页面text属性不唯一怎么办，组合使用，xpath语法里面\*是代表匹配任意的值
+		3、在selenium里面\*是匹配任意标签，appium里的*是匹配任意class名称
+		4、组合使用 //android.widget.TextView[@text='小说'] 即//class[@text='页面text文本']
+	6、android_uiautomator定位方法
+		1、text文本定位语法， new UiSelector().text("text文本")
+		2、用textContains模糊匹配 ， new UiSelector().textContains("包含text文本")
+		3、以某个文本开头的匹配，  new UiSelector().textStartsWith("以text文本开头")
+		4、正则匹配textMatches， new UiSelector().textMatches("正则表达式")
+		5、className语法，    new UiSelector().className("className")
+		6、description语法，new UiSelector().description("contenet-des属性")
+	7、android_uiautomator定位进阶
+		1、组合定位，一般组合用id,class,text三个属性好一点，description这个属性也可以一起两两组合
+			1、id_text 	id_text = 'resource_Id("com.baidu.yuedu:id/webbooktitle").text("小说")'
+						driver.find_element_by_android_uiautomator(id_text).click()
+			2、class_text用法一样
+			3、其它组合，id,class也可以与index,checkable,clickable,password等不常用的属性组合
+		2、父子定位childSelector， 	son = 'resourceId("com.baidu.yuedu:id/rl_tabs").childSelector(text("小说"))'
+									driver.find_element_by_android_uiautomator(son).click()
+		3、兄弟定位fromParent，用法同父子定位相同
+		4、text，id，class都可用正则匹配
+11、native和webview切换
+	1、app都是混合式的native+webview，对应native上的元素通过uiautomatorviewer很容易定位到，webview上的元素就无法识别
+	2、识别webview
+	3、contexts环境切换
+	4、切换webview
+		1、要想操作webview上的元素，第一步需要切换环境
+		2、切换方法：driver.switch_to.context(参数是webview的context)
+		3、如果是模拟器，不需要切换场景
+	5、切回native
+		1、driver.switch_to.context("NATIVE_APP")   # 这个NATIVE_APP是固定的参数
+		2、driver.switch_to.context(contexts[0])      # 从contexts里取第一个参数
+12、查看webview元素 2.9
+13、夜神模拟器使用
+	1、安装模拟器
+	2、模拟器中的nox_abd和sdk的adb版本保持一致
+	3、代替真机测试
+14、滑动屏幕（swipe）
+	1、swipe(self, start_x, start_y, end_x, end_y, duration=None)
+	2、duration是滑动屏幕持续的时间，时间越短速度越快。默认为None可不填
+	3、	#获取屏幕的size
+		size =driver.get_window_size()
+		print(size)
+		#获取width
+		print(size['width'])
+		#获取height
+		print(size['height'])
+	4、封装滑动方法，上下左右四种常用的滑动方法封装以便调用
+		1、参数1：driver
+		   参数2：t是持续时间
+		   参数3：n滑动次数
+		2、	def swiperigth(driver,t,n):
+				l=driver.get_window_size()
+				x1 = l['width']*0.05 #起始x坐标
+				y1 = l['height']*0.5 #起始y坐标
+				x2 = l['width']*0.75 #终点y坐标
+				for i in range(n):
+					driver.swipe(x1,y1,x2,y2,t)
+			if __name__ == "__main__":
+			print(driver.get_window_size())
+15、模拟手势点击（tap）
+	1、元素定位不到，拿出绝招：坐标定位
+	2、tap用法
+		1、tap(self, positions, duration=None):
+		2、positions是list类型，duration是点击持续时间（毫秒）
+		3、positions里面对象是元组，最多五个。如：[(100, 20), (100, 60)]
+		4、driver.tap([(100, 20),(100, 100)], 500)
+16、android特有的wait_activity
+	1、启动app的时候，直接下一步操作会报错，启动完成的时候加sleep（）
+	2、用wait_activity的语法，想点击的页面activity出现了再点击，可以有效的节省时间
+	3、wait_activity(self, activity, timeout, interval=1):
+		1、等待指定的activity出现直到超时，interval为扫描间隔1秒
+		2、activity - 需等待的目标 activity
+		3、timeout - 最大超时时间，单位是s
+		4、用法：driver.wait_activity(‘.activity.xxx’,5,2)
+	4、获取current_activity
+		1、打开app后，先sleep10秒，等app完全启动完成进入主页面，然后获取当前界面的activity
+		2、ac = driver.current_activity
+		   print(ac)
+		   driver.wait_activity(".base.ui.MainActivity", 30) #.base.ui.MainActivity即是获取的ac
+17、toast消息判断
+	1、 Supported Platforms，android版支持：Espresso、UiAutomator2、UiAutomator、Selendroid四种驱动，后两个不推荐
+	2、toast定位
+		1、定位toast元素，这里一定要注意automationName的参数必须是Uiautomator2才能定位到
+18、list定位（find_elements）
+	1、属性不唯一，单数element无法定位到时，用复数elements定位一组对象
+	2、elements定位到的是type是list
+	3、列表可通过索引取元素对象 list[0]...
+19、adb shell 点击事件
+	1、appium个别元素很难定位及定位后不能点击，使用adb去执行点击事件
+	2、input事件
+		1、adb devices查看手机是否连接
+		2、adb shell进入shell模式
+		3、input ，input可以实现的功能，adb shell input ...
+			1、输入文本信息：input text xxx
+			2、物理按键操作：input keyevent KEYCODE_VOLUME_DOWN
+			3、点击（DOWN_UP）操作：input tap 500 500 坐标；adb shell input tap 200 500可以启动点击app
+			4、模拟滑动操作：input swipe 200 500 400 500
+			5、模拟轨迹球操作 input roll 100 200
+			6、dumpsys activity top | grep ACTIVITY 查看进程
+20、adb shell按键操作input keyevent	
+	1、keyevent事件，有一个数字与字符串对应表 如：0 –> “KEYCODE_UNKNOWN”
+		#方法一：> adb shell input keyevent KEYCODE_UNKNOWN #方法二：> adb shell input keyevent 0
+	2、常用的keyevent事件
+		1、解锁(KEYCODE_NOTIFICATION)： adb shell input keyevent 83
+		2、向上(KEYCODE_DPAD_UP)：adb shell input keyevent 19
+		3、向下(KEYCODE_DPAD_DOWN)：adb shell input keyevent 20
+		4、向左(KEYCODE_DPAD_LEFT)：adb shell input keyevent 21
+		5、向右(KEYCODE_DPAD_RIGHT)：adb shell input keyevent 22
+21、adb shell输入中文(ADBKeyBoard) 暂时搁置2.24
+22、adb offline(5037端口被占)	杀进程重启
+23、首次打开app权限弹窗问题
+	1、模拟器不会有权限弹窗
+	2、真机会出现个数不定的权限弹窗，写个函数判断方法
+		def always_allow(driver, number=5):
+			for i in range(number):
+        		loc = ("xpath", "//*[@text='始终允许']")
+        		try:
+            		e = WebDriverWait(driver, 1, 0.5).until(EC.presence_of_element_located(loc))
+            		e.click()
+        		except:
+            		pass
+
+	3、权限弹窗点击始终允许，text就一样，通过xpath来定位loc=("xpath","//*[@text='始终允许']]")
+	4、用selenium里面的显示等待模块（WebDriverWait）和判断模块（expected_conditions）封装定位方法
+		from selenium.webdriver.support.ui import WebDriverWait
+		from selenium.webdriver.support import expected_conditions as EC
+24、长按（long_press）
+	
+	
+微信公众号小程序元素定位
+1、环境准备
+	1、python 3.6
+	2、appium 1.7以上版本
+	3、微信6.6.6
+	4、微信里面webview 57.0
+	5、电脑上chrome版本 66.0
+	6、appium-chromedriver路径下chromedriver 2.28
+2、公众号元素定位，content切换webview
+	1、手机开启调试功能，数据线连接电脑
+	2、借助chrome浏览器，电脑谷歌浏览器输入 chrome://inspect/#devices，需谷歌浏览器版本与chromedriver版本匹配
+	3、在浏览器下选择webview页面，点击inspect进入webview页面进行元素定位
+		1、点击inspect可能空白和404，需要翻墙; 也可用开发者离线包
+		2、查看webview版本，需和appium中的webdriver.exe版本匹配 如：谷歌57需对应webdriver 2.28版本
+		3、webdriver版本在appium中找到运行可查看版本
+	4、appium中context的切换时，识别webview的时候, 把com.tencent.mm:tools的webview识别成com.tencent.mm的webview
+		1、加参数'chromeOptions': {'androidProcess': 'com.tencent.mm:tools'}
+		2、appium1.7以上版本加'automationName': 'Uiautomator2'，非1.7以上版本运行报错
+	5、webview单页面元素定位：借助Appium 的AppiumBootstrap.jar工具
+		1、adb shell uiautomator runtest AppiumBootstrap.jar -c io.appium.android.bootstrap.Bootstrap  -e disableAndroidWatchers false
+		2、进入页面执行上面命令即可获取当前页面元素
+	6、公众号使用模拟器不需要切换场景，运行代码后，使用uiautomatorviewer重新获取页面，可进行定位
+	7、模拟器不能打开x5调试模式，不能切换到webview
+3、小程序元素定位，不需要切换场景，使用uiautomatorviewer可进行定位
+
+4、程序跳过设置
+    1、@unittest.skip  # 无条件跳过
+    2、@unittest.skipUnless(condition='False', reason=u'为False不执行')  # 为False时跳过
+    3、@unittest.skipIf(condition='True', reason=u'为Ture时跳过')
+    4、@unittest.expectedFailure  # 断言跳过
+        self.assertEquals(a, b)
+	
+	
+		
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

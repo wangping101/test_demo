@@ -1,0 +1,25 @@
+微信公众号及小程序元素定位
+1、环境准备
+	1、python 3.6
+	2、appium 1.7以上版本
+	3、微信6.6.6
+	4、微信里面webview 57.0
+	5、电脑上chrome版本 66.0
+	6、appium-chromedriver路径下chromedriver 2.28
+2、公众号元素定位，content切换webview
+	1、手机开启调试功能，数据线连接电脑
+	2、借助chrome浏览器，电脑谷歌浏览器输入 chrome://inspect/#devices
+	3、在浏览器下选择webview页面，点击inspect进入webview页面进行元素定位
+		1、点击inspect可能空白和404，需要翻墙; 也可用开发者离线包
+		2、查看webview版本，需和appium中的webdriver.exe版本匹配 如：谷歌57需对应webdriver 2.28版本
+		3、webdriver版本在appium中找到运行可查看版本
+	4、appium中context的切换时，识别webview的时候, 把com.tencent.mm:tools的webview识别成com.tencent.mm的webview
+		1、加参数'chromeOptions': {'androidProcess': 'com.tencent.mm:tools'}
+		2、appium1.7以上版本加'automationName': 'Uiautomator2'，非1.7以上版本运行报错
+	5、webview单页面元素定位：借助Appium 的AppiumBootstrap.jar工具
+		1、adb shell uiautomator runtest AppiumBootstrap.jar -c io.appium.android.bootstrap.Bootstrap  -e disableAndroidWatchers false
+		2、进入页面执行上面命令即可获取当前页面元素
+	6、公众号使用模拟器不需要切换场景，运行代码后，使用uiautomatorviewer重新获取页面，可进行定位
+	7、模拟器不能打开x5调试模式，不能切换到webview
+3、小程序元素定位，不需要切换场景，使用uiautomatorviewer可进行定位
+	
